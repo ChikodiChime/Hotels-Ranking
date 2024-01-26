@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateHotel } from '../features/hotel/hotelSlice';
+import StarRating from './StarRating';
 
 const EditHotels = ({ hotelId }) => {
   const dispatch = useDispatch();
@@ -19,8 +20,8 @@ const EditHotels = ({ hotelId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('Submitting Edit - Values:', newName, newAddress, newCountry, newCategory);
 
-    // Ensure hotelToEdit and hotelToEdit.id are defined before dispatching
     if (hotelToEdit && hotelToEdit.id) {
       dispatch(
         updateHotel({
@@ -43,6 +44,9 @@ const EditHotels = ({ hotelId }) => {
     }
   }, [hotelToEdit]);
 
+
+  console.log('EditHotels - New Category:', newCategory); 
+
   useEffect(() => {
     const CountriesData = async () => {
       const res = await fetch(`${Base_Url}`);
@@ -57,33 +61,55 @@ const EditHotels = ({ hotelId }) => {
 
   return (
     <>
-      <form action="" onSubmit={handleSubmit}>
-            <input type="text"
-            placeholder='Name of Hotel'
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            />
-            <input type="text"
-            placeholder='Address of Hotel'
-            value={newAddress}
-            onChange={(e) => setNewAddress(e.target.value)}
-            />
-            <select name="country" value={newCountry} id="" onChange={(e) => setNewCountry(e.target.value)}>
+      <div className='className=" py-20"'>
+        <form 
+          action="" 
+          onSubmit={handleSubmit}
+          className="p-10  gap-5 flex flex-col items-center justify-center"
+          >
+            <p className="text-2xl text-[#370757] font-bold text-center">Edit Hotel</p>
+            <div className="grid sm:grid-cols-2 gap-5">
+              <input type="text"
+              placeholder='Name of Hotel'
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className="bg-slate-100 px-3 w-full py-6 active: outline-[#370757]"
+
+              />
+              <input type="text"
+              placeholder='Address of Hotel'
+              value={newAddress}
+              onChange={(e) => setNewAddress(e.target.value)}
+              className="bg-slate-100 px-3 w-full py-6 active: outline-[#370757]"
+
+              />
+              <select 
+                name="country" 
+                value={newCountry} id="" 
+                onChange={(e) => setNewCountry(e.target.value)}
+                className="bg-slate-100 px-3 w-full py-6 active: outline-[#370757]"
+                
+                >
                 <option value=''>Select Country</option>
                 {countries.map((country, index) => (
                     <option value={country.country} key={index}>{country.country}</option>
                 ))}
             </select>
-            <select name="" value={newCategory} id=""  onChange={(e) => setNewCategory(e.target.value)}>
-                <option value="">Select Category</option>
-                <option value="1Star">1 Star</option>
-                <option value="2Stars">2 Stars</option>
-                <option value="3Stars">3 Stars</option>
-            </select>
+            <div className='bg-slate-100 px-3 w-full flex flex-col justify-center'>
+                <label htmlFor="star-rating" className="text-[#370757]">
+                    Hotel Rating:
+                </label>
+              
+                <StarRating value={newCategory} onChange={(value) => setNewCategory(value)} />
 
-            <button type="submit">Edit Hotel</button>
+            </div>
+          </div>
+          <button type="submit" className="bg-[#370757] text-white font-bold hover:bg-purple-800 py-6 px-20 mt-5">Edit Hotel</button>
+          
         </form>
 
+    </div>
+      
     </>
   );
 };

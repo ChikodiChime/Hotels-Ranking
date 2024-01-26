@@ -1,13 +1,12 @@
 import './App.css';
-import AddHotels from './components/AddHotels';
-import Hotels from './components/Hotels';
+
+import HomeComponent from './components/HomeComponent';
 
 function App() {
   return (
     <div className="App">
-      {""}
-      <Hotels/>
-      <AddHotels/>
+      <HomeComponent/>
+      
     </div>
   );
 }

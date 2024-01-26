@@ -23,15 +23,12 @@ export const hotelSlice = createSlice({
             
          
         
-        addCategory: (state, action) => {
-            const newCategory = action.payload;
-            state.categories.push(newCategory)
-        },
+       
        
         updateHotel: (state, action) => {
-            const { id, name, address, country, category } = action.payload;
+            const { id, name, address, country, categoryId } = action.payload;
           
-            // Find the index of the hotel to be updated
+           
             const index = state.hotels.findIndex((hotel) => hotel.id === id);
           
             if (index !== -1) {
@@ -41,7 +38,7 @@ export const hotelSlice = createSlice({
                 name,
                 address,
                 country,
-                category,
+                categoryId,
               };
             }
           },
@@ -56,5 +53,5 @@ export const hotelSlice = createSlice({
     }
 })
 
-export const {addHotel, addCategory, updateHotel, removeHotel} = hotelSlice.actions
+export const {addHotel,  updateHotel, removeHotel} = hotelSlice.actions
 export default hotelSlice.reducer
